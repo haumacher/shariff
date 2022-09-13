@@ -1,0 +1,137 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+	
+	<groupId>org.webjars</groupId>
+	<artifactId>shariff</artifactId>
+	<version>3.2.1</version>
+	
+	<name>shariff-webjar</name>
+    <description>WebJar for Shariff - privacy-aware social media buttons</description>
+    <url>http://webjars.org</url>
+    
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <upstream.url>https://github.com/heiseonline/shariff/releases/download/3.2.1/shariff-3.2.1.zip</upstream.url>
+        <destDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${project.version}</destDir>
+        <requirejs>
+            {
+                "paths": {
+                    "${project.artifactId}": "shariff.min.js"
+                },
+                "shim": {
+                    "${project.artifactId}": ["jquery"]
+                }
+            }
+        </requirejs>
+    </properties>
+
+    <developers>
+        <developer>
+            <id>haumacher</id>
+            <name>Bernhard Haumacher</name>
+            <email>haui@haumacher.de</email>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>MIT License (MIT)</name>
+            <url>https://raw.githubusercontent.com/heiseonline/shariff/3.2.1/LICENSE.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>http://github.com/webjars/${project.artifactId}</url>
+        <connection>scm:git:https://github.com/webjars/${project.artifactId}.git</connection>
+        <developerConnection>scm:git:https://github.com/webjars/${project.artifactId}.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>font-awesome</artifactId>
+            <version>6.1.2</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.6.0</version>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.jamesward</groupId>
+                <artifactId>unsnapshot-maven-plugin</artifactId>
+                <version>0.2</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>unsnapshot</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals><goal>run</goal></goals>
+                        <configuration>
+                            <target>
+                                <echo message="Download archive"/>
+                                <mkdir dir="${project.build.directory}/orig"/>
+                                <get src="${upstream.url}" dest="${project.build.directory}/orig/${project.artifactId}.zip"/>
+
+                                <echo message="Unzip archive"/>
+                                <mkdir dir="${project.build.directory}/extracted"/>
+                                <unzip src="${project.build.directory}/orig/${project.artifactId}.zip" dest="${project.build.directory}/extracted"/>
+
+                                <echo message="Moving resources"/>
+                                <copy todir="${destDir}">
+                                    <fileset dir="${project.build.directory}/extracted" excludes="fa-*"/>
+                                </copy>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.8</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>sonatype-nexus-staging</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    	
+</project>
