@@ -1,6 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
 	<parent>
@@ -11,7 +9,7 @@
 	
 	<groupId>org.webjars</groupId>
 	<artifactId>shariff</artifactId>
-	<version>3.2.1-SNAPSHOT</version>
+	<version>3.2.1</version>
 	
 	<name>shariff-webjar</name>
     <description>WebJar for Shariff - privacy-aware social media buttons</description>
@@ -53,7 +51,7 @@
         <url>http://github.com/webjars/${project.artifactId}</url>
         <connection>scm:git:https://github.com/webjars/${project.artifactId}.git</connection>
         <developerConnection>scm:git:https://github.com/webjars/${project.artifactId}.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>shariff-3.2.1</tag>
     </scm>
     
     <dependencies>
@@ -96,17 +94,17 @@
                         <goals><goal>run</goal></goals>
                         <configuration>
                             <target>
-                                <echo message="Download archive"/>
-                                <mkdir dir="${project.build.directory}/orig"/>
-                                <get src="${upstream.url}" dest="${project.build.directory}/orig/${project.artifactId}.zip"/>
+                                <echo message="Download archive" />
+                                <mkdir dir="${project.build.directory}/orig" />
+                                <get src="${upstream.url}" dest="${project.build.directory}/orig/${project.artifactId}.zip" />
 
-                                <echo message="Unzip archive"/>
-                                <mkdir dir="${project.build.directory}/extracted"/>
-                                <unzip src="${project.build.directory}/orig/${project.artifactId}.zip" dest="${project.build.directory}/extracted"/>
+                                <echo message="Unzip archive" />
+                                <mkdir dir="${project.build.directory}/extracted" />
+                                <unzip src="${project.build.directory}/orig/${project.artifactId}.zip" dest="${project.build.directory}/extracted" />
 
-                                <echo message="Moving resources"/>
+                                <echo message="Moving resources" />
                                 <copy todir="${destDir}">
-                                    <fileset dir="${project.build.directory}/extracted" excludes="fa-*"/>
+                                    <fileset dir="${project.build.directory}/extracted" excludes="fa-*" />
                                 </copy>
                             </target>
                         </configuration>
