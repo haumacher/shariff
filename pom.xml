@@ -9,7 +9,7 @@
 	
 	<groupId>org.webjars</groupId>
 	<artifactId>shariff</artifactId>
-	<version>3.2.1</version>
+	<version>3.2.2-SNAPSHOT</version>
 	
 	<name>shariff-webjar</name>
     <description>WebJar for Shariff - privacy-aware social media buttons</description>
@@ -51,7 +51,7 @@
         <url>http://github.com/webjars/${project.artifactId}</url>
         <connection>scm:git:https://github.com/webjars/${project.artifactId}.git</connection>
         <developerConnection>scm:git:https://github.com/webjars/${project.artifactId}.git</developerConnection>
-        <tag>shariff-3.2.1</tag>
+        <tag>HEAD</tag>
     </scm>
     
     <dependencies>
